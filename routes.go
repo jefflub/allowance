@@ -30,4 +30,10 @@ var routes = Routes{
 		"/test",
 		handlers.TestServer,
 	},
+	Route{
+		"CreateKid",
+		"POST",
+		"/createkid",
+		handlers.CreateKid,
+	},
 }
