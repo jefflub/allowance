@@ -31,12 +31,21 @@ func BaseHandler(inner RequestHandler, name string) http.HandlerFunc {
 	t := reflect.TypeOf(inner)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
+		var err error
 		// Handle request logging
 		defer func() {
 			status := "SUCCESS"
+			var logmsg interface{}
+			logmsg = ""
 			e := recover()
 			if e != nil {
-				status = "ERROR"
+				status = "PANIC"
+				logmsg = e
+			} else {
+				if err != nil {
+					status = "ERROR"
+					logmsg = err
+				}
 			}
 			log.Printf(
 				"%s\t%s\t%s\t%s\t%s\t%v",
@@ -45,7 +54,7 @@ func BaseHandler(inner RequestHandler, name string) http.HandlerFunc {
 				r.RequestURI,
 				name,
 				time.Since(start),
-				e,
+				logmsg,
 			)
 		}()
 
@@ -77,8 +86,6 @@ func BaseHandler(inner RequestHandler, name string) http.HandlerFunc {
 			if jerr := json.NewEncoder(w).Encode(err); jerr != nil {
 				panic(jerr)
 			}
-			// Need to panic to get logging right
-			panic(err)
 		}
 	})
 }
