@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
+	"github.com/jefflub/allowance/handlers"
 )
 
 func main() {
@@ -20,8 +22,7 @@ func newRouter() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
 		var handler http.Handler
-		handler = route.HandlerFunc
-		handler = Logger(handler, route.Name)
+		handler = handlers.BaseHandler(route.Template, route.Name)
 
 		router.
 			Methods(route.Method).
