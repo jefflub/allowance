@@ -39,4 +39,10 @@ var routes = Routes{
 		"/createfamily",
 		handlers.CreateFamily{},
 	},
+	Route{
+		"Login",
+		"POST",
+		"/login",
+		handlers.Login{},
+	},
 }

@@ -1,11 +1,18 @@
 package dbapi
 
-import "database/sql"
+import (
+	"database/sql"
+
+	"golang.org/x/crypto/bcrypt"
+)
 
 // CreateFamily creates a family and the first parent
 func CreateFamily(familyName string, parentName string, parentEmail string, parentPassword string) (Family, Parent, error) {
 	var family Family
 	var parent Parent
+
+	password := []byte(parentPassword)
+	hashedPassword, err := bcrypt.GenerateFromPassword(password, bcrypt.DefaultCost)
 
 	db, err := sql.Open("mysql", "allowance_user:goniff@/allowance")
 	if err != nil {
@@ -29,7 +36,7 @@ func CreateFamily(familyName string, parentName string, parentEmail string, pare
 		return family, parent, err
 	}
 	// Create the parent
-	if _, err := tx.Exec("INSERT INTO parents VALUES(NULL, ?, ?, ?, NULL, NULL)", family.ID, parentName, parentEmail); err != nil {
+	if _, err := tx.Exec("INSERT INTO parents VALUES(NULL, ?, ?, ?, ?, NULL, NULL)", family.ID, parentName, parentEmail, hashedPassword); err != nil {
 		return family, parent, err
 	}
 	// Get the ID
