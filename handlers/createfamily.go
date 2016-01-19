@@ -11,8 +11,9 @@ type CreateFamily struct {
 }
 
 type createFamilyResponse struct {
-	FamilyID int `json:"familyId"`
-	ParentID int `json:"parentId"`
+	Token    string `json:"token"`
+	FamilyID int    `json:"familyId"`
+	ParentID int    `json:"parentId"`
 }
 
 // HandleRequest handles the CreateFamily request
@@ -22,7 +23,12 @@ func (params CreateFamily) HandleRequest() (interface{}, error) {
 		return nil, err
 	}
 
+	var token string
+	if token, err = CreateLoginToken(family.ID, parent.ID); err != nil {
+		return nil, err
+	}
+
 	// Respond
-	response := createFamilyResponse{family.ID, parent.ID}
+	response := createFamilyResponse{token, family.ID, parent.ID}
 	return response, nil
 }

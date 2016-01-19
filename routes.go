@@ -14,19 +14,6 @@ type Route struct {
 type Routes []Route
 
 var routes = Routes{
-	/*
-		Route{
-			"TestServer",
-			"GET",
-			"/test",
-			handlers.TestServer,
-		},
-		Route{
-			"CreateKid",
-			"POST",
-			"/createkid",
-			handlers.CreateKid,
-		},*/
 	Route{
 		"TestServer",
 		"POST",
@@ -44,5 +31,11 @@ var routes = Routes{
 		"POST",
 		"/login",
 		handlers.Login{},
+	},
+	Route{
+		"LoginCheck",
+		"POST",
+		"/logincheck",
+		handlers.LoginCheck{},
 	},
 }

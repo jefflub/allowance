@@ -9,6 +9,7 @@ type Login struct {
 }
 
 type loginResponse struct {
+	Token  string        `json:"token"`
 	Family *dbapi.Family `json:"family"`
 	Parent *dbapi.Parent `json:"parent"`
 }
@@ -20,5 +21,10 @@ func (l Login) HandleRequest() (interface{}, error) {
 		return nil, RequestError{err.Error()}
 	}
 
-	return loginResponse{family, parent}, nil
+	var token string
+	if token, err = CreateLoginToken(family.ID, parent.ID); err != nil {
+		return nil, err
+	}
+
+	return loginResponse{token, family, parent}, nil
 }
