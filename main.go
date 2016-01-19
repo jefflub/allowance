@@ -1,17 +1,21 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
+	"github.com/jefflub/allowance/config"
 	"github.com/jefflub/allowance/handlers"
 )
 
 func main() {
-	fmt.Println("Hello")
-
+	err := config.LoadConfig("config.toml")
+	if err != nil {
+		log.Printf("Error loading config: %v", err)
+		return
+	}
 	r := newRouter()
 
 	// Fire up the server

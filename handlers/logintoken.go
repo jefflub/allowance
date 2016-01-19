@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/dvsekhvalnov/jose2go"
+	"github.com/jefflub/allowance/config"
 )
 
 // LoginTokenInfo contains current login information
@@ -13,8 +14,6 @@ type LoginTokenInfo struct {
 	FamilyID   int   `json:"fId"`
 	ParentID   int   `json:"pId"`
 }
-
-var key = []byte{97, 48, 97, 50, 97, 98, 100, 56, 45, 54, 49, 54, 50, 45, 52, 49, 99, 51, 45, 56, 51, 100, 54, 45, 49, 99, 102, 53, 53, 57, 98, 52, 54, 97, 102, 99}
 
 // CreateLoginToken creates a token to be used for login
 func CreateLoginToken(familyID int, parentID int) (string, error) {
@@ -25,13 +24,13 @@ func CreateLoginToken(familyID int, parentID int) (string, error) {
 	if err != nil {
 		panic(err)
 	}
-	token, err := jose.Sign(string(payload), jose.HS256, key)
+	token, err := jose.Sign(string(payload), jose.HS256, config.GetConfig().LoginKey)
 	return string(token), err
 }
 
 // ParseLoginToken takes a login token and confirms that it's valid
 func ParseLoginToken(token string) (LoginTokenInfo, error) {
-	payload, _, err := jose.Decode(token, key)
+	payload, _, err := jose.Decode(token, config.GetConfig().LoginKey)
 	response := new(LoginTokenInfo)
 
 	if err == nil {

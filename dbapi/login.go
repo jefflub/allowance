@@ -3,12 +3,14 @@ package dbapi
 import (
 	"database/sql"
 
+	"github.com/jefflub/allowance/config"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
 // Login checks the password for a user and returns a login object if correct
 func Login(email string, password string) (*Parent, *Family, error) {
-	db, err := sql.Open("mysql", "allowance_user:goniff@/allowance")
+	db, err := sql.Open("mysql", config.GetConfig().DbURL)
 	if err != nil {
 		return nil, nil, err
 	}
