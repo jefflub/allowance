@@ -35,7 +35,15 @@ func (a AddMoney) HandleRequest() (interface{}, error) {
 		var allSum = 0
 		for i, all := range a.Allocations {
 			allSum += all.Allocation
-			// TODO: Check that bucketID is valid
+			found := false
+			for _, b := range buckets {
+				if b.ID == all.BucketID {
+					found = true
+				}
+			}
+			if found == false {
+				return nil, RequestError{"Invalid bucket ID specified"}
+			}
 			transactions[i].ParentID = loginInfo.ParentID
 			transactions[i].Note = a.Note
 			transactions[i].BucketID = all.BucketID

@@ -1,11 +1,6 @@
 package dbapi
 
-import (
-	"database/sql"
-	"errors"
-
-	"github.com/jefflub/allowance/config"
-)
+import "errors"
 
 var defaultBuckets = []Bucket{
 	Bucket{0, "Spending", 80, 0.0},
@@ -22,7 +17,7 @@ func CreateKid(familyID int, name string, email string, buckets []Bucket) (Kid, 
 		var allocationSum = 0
 		for _, b := range buckets {
 			if b.DefaultAllocation < 0 {
-				return kid, errors.New("Invalid default allocation < 0")
+				return kid, errors.New("Invalid default allocation: < 0")
 			}
 			allocationSum += b.DefaultAllocation
 		}
@@ -30,12 +25,6 @@ func CreateKid(familyID int, name string, email string, buckets []Bucket) (Kid, 
 			return kid, errors.New("Invalid bucket default allocations. Must sum to 100.")
 		}
 	}
-
-	db, err := sql.Open("mysql", config.GetConfig().DbURL)
-	if err != nil {
-		return kid, err
-	}
-	defer db.Close()
 
 	tx, err := db.Begin()
 	if err != nil {

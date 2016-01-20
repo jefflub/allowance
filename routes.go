@@ -45,6 +45,12 @@ var routes = Routes{
 		handlers.AddMoney{},
 	},
 	Route{
+		"SpendMoney",
+		"POST",
+		"/spendmoney",
+		handlers.SpendMoney{},
+	},
+	Route{
 		"Login",
 		"POST",
 		"/login",

@@ -1,12 +1,6 @@
 package dbapi
 
-import (
-	"database/sql"
-
-	"github.com/jefflub/allowance/config"
-
-	"golang.org/x/crypto/bcrypt"
-)
+import "golang.org/x/crypto/bcrypt"
 
 // CreateFamily creates a family and the first parent
 func CreateFamily(familyName string, parentName string, parentEmail string, parentPassword string) (Family, Parent, error) {
@@ -15,12 +9,6 @@ func CreateFamily(familyName string, parentName string, parentEmail string, pare
 
 	password := []byte(parentPassword)
 	hashedPassword, err := bcrypt.GenerateFromPassword(password, bcrypt.DefaultCost)
-
-	db, err := sql.Open("mysql", config.GetConfig().DbURL)
-	if err != nil {
-		return family, parent, err
-	}
-	defer db.Close()
 
 	tx, err := db.Begin()
 	if err != nil {

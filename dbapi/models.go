@@ -1,6 +1,21 @@
 package dbapi
 
-import "time"
+import (
+	"database/sql"
+	"time"
+
+	"github.com/jefflub/allowance/config"
+)
+
+var db *sql.DB
+
+func init() {
+	var err error
+	db, err = sql.Open("mysql", config.GetConfig().DbURL)
+	if err != nil {
+		panic(err)
+	}
+}
 
 type (
 	// Family represents the structure of our resource

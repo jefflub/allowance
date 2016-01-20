@@ -1,25 +1,15 @@
 package dbapi
 
-import (
-	"database/sql"
-	"errors"
-
-	"github.com/jefflub/allowance/config"
-)
+import "errors"
 
 // GetBuckets gets all of the buckets for a particular kid
 func GetBuckets(familyID int, kidID int) ([]Bucket, error) {
 	buckets := make([]Bucket, 0, 5)
-	db, err := sql.Open("mysql", config.GetConfig().DbURL)
-	if err != nil {
-		return nil, err
-	}
-	defer db.Close()
 
 	// Confirm kid belongs to family
 	var f int
 	row := db.QueryRow("SELECT familyId FROM kids WHERE kidId=?", kidID)
-	err = row.Scan(&f)
+	err := row.Scan(&f)
 	if err != nil {
 		return nil, err
 	}

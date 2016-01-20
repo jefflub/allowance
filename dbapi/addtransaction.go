@@ -1,22 +1,10 @@
 package dbapi
 
-import (
-	"database/sql"
-	"log"
-
-	"github.com/jefflub/allowance/config"
-	"github.com/nu7hatch/gouuid"
-)
+import "github.com/nu7hatch/gouuid"
 
 // AddTransactions adds one or more transactions to the appropriate bucket
 func AddTransactions(transactions []Transaction) ([]int, error) {
 	transIDs := make([]int, len(transactions))
-	db, err := sql.Open("mysql", config.GetConfig().DbURL)
-	if err != nil {
-		return transIDs, err
-	}
-	defer db.Close()
-
 	tx, err := db.Begin()
 	if err != nil {
 		return transIDs, err
@@ -27,7 +15,7 @@ func AddTransactions(transactions []Transaction) ([]int, error) {
 		if t.Amount == 0 {
 			continue
 		}
-		log.Printf("Bucket: %v, Parent: %v, Amount: %v, Note: %s, UUID: %s", t.BucketID, t.ParentID, t.Amount, t.Note, u4.String())
+		//log.Printf("Bucket: %v, Parent: %v, Amount: %v, Note: %s, UUID: %s", t.BucketID, t.ParentID, t.Amount, t.Note, u4.String())
 		if _, err := tx.Exec("INSERT INTO transactions VALUES(NULL, ?, ?, ?, ?, ?, NULL, NULL)", t.BucketID, t.ParentID, t.Amount, t.Note, u4.String()); err != nil {
 			return transIDs, err
 		}
