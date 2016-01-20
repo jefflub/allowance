@@ -27,6 +27,24 @@ var routes = Routes{
 		handlers.CreateFamily{},
 	},
 	Route{
+		"CreateKid",
+		"POST",
+		"/createkid",
+		handlers.CreateKid{},
+	},
+	Route{
+		"GetBuckets",
+		"POST",
+		"/getbuckets",
+		handlers.GetBuckets{},
+	},
+	Route{
+		"AddMoney",
+		"POST",
+		"/addmoney",
+		handlers.AddMoney{},
+	},
+	Route{
 		"Login",
 		"POST",
 		"/login",

@@ -1,0 +1,5 @@
+[database]
+connectUrl="allowance_user:password@/allowance"
+
+[crypto]
+loginKey=[11, 22, 33, 44, 97, 98, 100, 98, 45, 54, 49, 54, 33, 45, 52, 111, 99, 56, 25, 56, 51, 100, 54, 45, 49, 99, 102, 53, 53, 57, 08, 52, 54, 97, 102, 99]

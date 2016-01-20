@@ -16,7 +16,7 @@ var currentConfiguration Config
 
 // LoadConfig loads configuration from a file and validates
 func LoadConfig(file string) error {
-	toml, err := toml.LoadFile("config.toml")
+	toml, err := toml.LoadFile(file)
 	if err != nil {
 		return err
 	}

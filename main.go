@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
@@ -11,7 +12,12 @@ import (
 )
 
 func main() {
-	err := config.LoadConfig("config.toml")
+	configFile := "config.toml"
+	if len(os.Args) > 1 {
+		configFile = os.Args[1]
+	}
+	log.Printf("Loading configuration file: %s", configFile)
+	err := config.LoadConfig(configFile)
 	if err != nil {
 		log.Printf("Error loading config: %v", err)
 		return

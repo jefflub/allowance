@@ -1,5 +1,7 @@
 package dbapi
 
+import "time"
+
 type (
 	// Family represents the structure of our resource
 	Family struct {
@@ -18,6 +20,7 @@ type (
 	Kid struct {
 		ID      int      `json:"id"`
 		Name    string   `json:"name"`
+		Email   string   `json:"email"`
 		Buckets []Bucket `json:"buckets"`
 	}
 
@@ -27,5 +30,15 @@ type (
 		Name              string  `json:"name"`
 		DefaultAllocation int     `json:"defaultAllocation"`
 		Total             float64 `json:"total"`
+	}
+
+	// Transaction is a single save or spend within a bucket
+	Transaction struct {
+		ID         int       `json:"id"`
+		BucketID   int       `json:"bucketId"`
+		ParentID   int       `json:"parentId"`
+		Amount     float64   `json:"amount"`
+		Note       string    `json:"note"`
+		CreateDate time.Time `json:"createDate"`
 	}
 )
