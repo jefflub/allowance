@@ -9,12 +9,14 @@ import (
 
 var db *sql.DB
 
-func init() {
+// OpenDB creates the DB object that will be used by everyone else
+func OpenDB() error {
 	var err error
 	db, err = sql.Open("mysql", config.GetConfig().DbURL)
 	if err != nil {
-		panic(err)
+		return err
 	}
+	return nil
 }
 
 type (

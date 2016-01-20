@@ -8,6 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/jefflub/allowance/config"
+	"github.com/jefflub/allowance/dbapi"
 	"github.com/jefflub/allowance/handlers"
 )
 
@@ -20,6 +21,10 @@ func main() {
 	err := config.LoadConfig(configFile)
 	if err != nil {
 		log.Printf("Error loading config: %v", err)
+		return
+	}
+	if err = dbapi.OpenDB(); err != nil {
+		log.Printf("Error opening DB: %v", err)
 		return
 	}
 	r := newRouter()
