@@ -57,6 +57,12 @@ var routes = Routes{
 		handlers.GetFamilySummary{},
 	},
 	Route{
+		"GetKidSummary",
+		"POST",
+		"/getkidsummary",
+		handlers.GetKidSummary{},
+	},
+	Route{
 		"Login",
 		"POST",
 		"/login",
