@@ -20,5 +20,5 @@ func (g GetBuckets) HandleRequest() (interface{}, error) {
 		return nil, err
 	}
 
-	return dbapi.GetBuckets(loginInfo.FamilyID, g.KidID)
+	return dbapi.GetBuckets(loginInfo.FamilyID, g.KidID, true)
 }

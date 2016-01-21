@@ -26,7 +26,7 @@ func (a AddMoney) HandleRequest() (interface{}, error) {
 	}
 
 	// Get buckets
-	buckets, err := dbapi.GetBuckets(loginInfo.FamilyID, a.KidID)
+	buckets, err := dbapi.GetBuckets(loginInfo.FamilyID, a.KidID, true)
 	var transactions []dbapi.Transaction
 
 	// Validate allocations

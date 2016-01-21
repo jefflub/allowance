@@ -24,6 +24,7 @@ type (
 	Family struct {
 		ID   int    `json:"id"`
 		Name string `json:"name"`
+		Kids []Kid  `json:"kids"`
 	}
 
 	// Parent is the parent of some kids
