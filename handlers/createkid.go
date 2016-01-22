@@ -15,7 +15,7 @@ type createKidResponse struct {
 }
 
 // HandleRequest creates a kid, using default buckets or provided buckets
-func (c CreateKid) HandleRequest() (interface{}, error) {
+func (c CreateKid) HandleRequest(vars map[string]string) (interface{}, error) {
 	var loginInfo LoginTokenInfo
 	var err error
 	if loginInfo, err = ParseLoginToken(c.Token); err != nil {

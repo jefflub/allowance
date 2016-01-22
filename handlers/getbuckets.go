@@ -13,7 +13,7 @@ type getBucketsResponse struct {
 }
 
 // HandleRequest handles the getbuckets request
-func (g GetBuckets) HandleRequest() (interface{}, error) {
+func (g GetBuckets) HandleRequest(vars map[string]string) (interface{}, error) {
 	var loginInfo LoginTokenInfo
 	var err error
 	if loginInfo, err = ParseLoginToken(g.Token); err != nil {

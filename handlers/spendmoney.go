@@ -15,7 +15,7 @@ type SpendMoney struct {
 }
 
 // HandleRequest handles the money spending request
-func (s SpendMoney) HandleRequest() (interface{}, error) {
+func (s SpendMoney) HandleRequest(vars map[string]string) (interface{}, error) {
 	var loginInfo LoginTokenInfo
 	var err error
 	if loginInfo, err = ParseLoginToken(s.Token); err != nil {

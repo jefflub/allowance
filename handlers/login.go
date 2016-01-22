@@ -15,7 +15,7 @@ type loginResponse struct {
 }
 
 // HandleRequest handles the login request
-func (l Login) HandleRequest() (interface{}, error) {
+func (l Login) HandleRequest(vars map[string]string) (interface{}, error) {
 	parent, family, err := dbapi.Login(l.Email, l.Password)
 	if err != nil {
 		return nil, RequestError{err.Error()}

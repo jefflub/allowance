@@ -19,7 +19,7 @@ type testServerResponse struct {
 }
 
 // HandleRequest handles the request
-func (t TestServer) HandleRequest() (interface{}, error) {
+func (t TestServer) HandleRequest(vars map[string]string) (interface{}, error) {
 	var response testServerResponse
 	response.TestData = t.TestData
 

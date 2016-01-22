@@ -8,7 +8,7 @@ type GetFamilySummary struct {
 }
 
 // HandleRequest handles the get family summary request
-func (g GetFamilySummary) HandleRequest() (interface{}, error) {
+func (g GetFamilySummary) HandleRequest(vars map[string]string) (interface{}, error) {
 	var loginInfo LoginTokenInfo
 	var err error
 	var family dbapi.Family

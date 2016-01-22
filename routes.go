@@ -74,4 +74,10 @@ var routes = Routes{
 		"/logincheck",
 		handlers.LoginCheck{},
 	},
+	Route{
+		"GetKidFromToken",
+		"GET",
+		"/kid/{token}/",
+		handlers.GetKidFromToken{},
+	},
 }

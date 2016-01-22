@@ -18,7 +18,7 @@ type AddMoney struct {
 }
 
 // HandleRequest handles the addmoney request
-func (a AddMoney) HandleRequest() (interface{}, error) {
+func (a AddMoney) HandleRequest(vars map[string]string) (interface{}, error) {
 	var loginInfo LoginTokenInfo
 	var err error
 	if loginInfo, err = ParseLoginToken(a.Token); err != nil {

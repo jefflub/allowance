@@ -9,6 +9,8 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/gorilla/mux"
+
 	"gopkg.in/validator.v2"
 )
 
@@ -23,7 +25,7 @@ func (r RequestError) Error() string {
 
 // RequestHandler is a type that will get a request
 type RequestHandler interface {
-	HandleRequest() (interface{}, error)
+	HandleRequest(vars map[string]string) (interface{}, error)
 }
 
 // BaseHandler contains base functionality for all handlers
@@ -63,24 +65,30 @@ func BaseHandler(inner RequestHandler, name string) http.HandlerFunc {
 		// Construct a new parameter object for this request
 		pPtr := reflect.New(t)
 		p := pPtr.Interface()
-		body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
-		if err == nil {
-			if err = r.Body.Close(); err == nil {
-				if err = json.Unmarshal(body, &p); err == nil {
-					// Validate the json
-					if err = validator.Validate(p); err == nil {
-						var response interface{}
-						if response, err = p.(RequestHandler).HandleRequest(); err == nil {
-							w.WriteHeader(200)
-							if err = json.NewEncoder(w).Encode(response); err != nil {
-								panic(err)
-							}
-						}
+		if r.Method == "POST" {
+			body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+			if err == nil {
+				if err = r.Body.Close(); err == nil {
+					if err = json.Unmarshal(body, &p); err == nil {
+						// Validate the json
+						err = validator.Validate(p)
 					}
 				}
 			}
 		}
 
+		// Run the request
+		if err == nil {
+			var response interface{}
+			if response, err = p.(RequestHandler).HandleRequest(mux.Vars(r)); err == nil {
+				w.WriteHeader(200)
+				if err = json.NewEncoder(w).Encode(response); err != nil {
+					panic(err)
+				}
+			}
+		}
+
+		// Send an error if necessary
 		if err != nil {
 			w.WriteHeader(422) // unprocessable entity
 			if jerr := json.NewEncoder(w).Encode(err); jerr != nil {

@@ -17,7 +17,7 @@ type createFamilyResponse struct {
 }
 
 // HandleRequest handles the CreateFamily request
-func (params CreateFamily) HandleRequest() (interface{}, error) {
+func (params CreateFamily) HandleRequest(vars map[string]string) (interface{}, error) {
 	family, parent, err := dbapi.CreateFamily(params.FamilyName, params.ParentName, params.ParentEmail, params.ParentPassword)
 	if err != nil {
 		return nil, err
