@@ -80,4 +80,10 @@ var routes = Routes{
 		"/kid/{token}/",
 		handlers.GetKidFromToken{},
 	},
+	Route{
+		"CreateKidToken",
+		"POST",
+		"/createkidtoken",
+		handlers.CreateKidToken{},
+	},
 }
