@@ -35,11 +35,12 @@ func main() {
 
 func newRouter() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
+	sub := router.PathPrefix("/api").Subrouter()
 	for _, route := range routes {
 		var handler http.Handler
 		handler = handlers.BaseHandler(route.Template, route.Name)
 
-		router.
+		sub.
 			Methods(route.Method).
 			Path(route.Pattern).
 			Name(route.Name).

@@ -44,7 +44,7 @@ func CreateKid(familyID int, name string, email string, buckets []Bucket) (Kid, 
 
 	// Add buckets
 	for _, b := range kid.Buckets {
-		if _, err := tx.Exec("INSERT INTO buckets VALUES(NULL, ?, ?, ?, NULL, NULL)", kid.ID, b.Name, b.DefaultAllocation); err != nil {
+		if _, err := tx.Exec("INSERT INTO buckets VALUES(NULL, ?, ?, ?, 0, NULL, NULL)", kid.ID, b.Name, b.DefaultAllocation); err != nil {
 			return kid, err
 		}
 	}
