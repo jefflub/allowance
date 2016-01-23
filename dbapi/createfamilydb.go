@@ -1,39 +1,27 @@
 package dbapi
 
-import "golang.org/x/crypto/bcrypt"
-
 // CreateFamily creates a family and the first parent
-func CreateFamily(familyName string, parentName string, parentEmail string, parentPassword string) (Family, Parent, error) {
-	var family Family
-	var parent Parent
-
-	password := []byte(parentPassword)
-	hashedPassword, err := bcrypt.GenerateFromPassword(password, bcrypt.DefaultCost)
+func CreateFamily(familyName string, parentName string, parentEmail string, parentPassword string) (int, int, error) {
+	var familyID int
+	var parentID int
 
 	tx, err := db.Begin()
 	if err != nil {
-		return family, parent, err
+		return familyID, parentID, err
 	}
 	defer tx.Rollback()
 
 	// Create the family
 	if _, err := tx.Exec("INSERT INTO family VALUES(NULL, ?, NULL, NULL)", familyName); err != nil {
-		return family, parent, err
+		return familyID, parentID, err
 	}
 	// Get the ID
 	row := tx.QueryRow("SELECT LAST_INSERT_ID()")
-	if err := row.Scan(&family.ID); err != nil {
-		return family, parent, err
+	if err := row.Scan(&familyID); err != nil {
+		return familyID, parentID, err
 	}
-	// Create the parent
-	if _, err := tx.Exec("INSERT INTO parents VALUES(NULL, ?, ?, ?, ?, NULL, NULL)", family.ID, parentName, parentEmail, hashedPassword); err != nil {
-		return family, parent, err
-	}
-	// Get the ID
-	row = tx.QueryRow("SELECT LAST_INSERT_ID()")
-	if err := row.Scan(&parent.ID); err != nil {
-		return family, parent, err
-	}
+
+	parentID, err = AddParent(familyID, parentName, parentEmail, parentPassword, tx)
 	tx.Commit()
-	return family, parent, nil
+	return familyID, parentID, nil
 }

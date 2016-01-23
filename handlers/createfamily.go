@@ -18,17 +18,16 @@ type createFamilyResponse struct {
 
 // HandleRequest handles the CreateFamily request
 func (params CreateFamily) HandleRequest(vars map[string]string) (interface{}, error) {
-	family, parent, err := dbapi.CreateFamily(params.FamilyName, params.ParentName, params.ParentEmail, params.ParentPassword)
+	var response createFamilyResponse
+	var err error
+	response.FamilyID, response.ParentID, err = dbapi.CreateFamily(params.FamilyName, params.ParentName, params.ParentEmail, params.ParentPassword)
 	if err != nil {
-		return nil, err
+		return response, err
 	}
 
-	var token string
-	if token, err = CreateLoginToken(family.ID, parent.ID); err != nil {
-		return nil, err
+	if response.Token, err = CreateLoginToken(response.FamilyID, response.ParentID); err != nil {
+		return response, err
 	}
 
-	// Respond
-	response := createFamilyResponse{token, family.ID, parent.ID}
 	return response, nil
 }

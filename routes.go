@@ -27,6 +27,12 @@ var routes = Routes{
 		handlers.CreateFamily{},
 	},
 	Route{
+		"AddParent",
+		"POST",
+		"/addparent",
+		handlers.AddParent{},
+	},
+	Route{
 		"CreateKid",
 		"POST",
 		"/createkid",
