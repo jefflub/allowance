@@ -24,7 +24,7 @@ func makeTokenString() string {
 func CreateKidToken(kidID int) (string, error) {
 	token := makeTokenString()
 
-	_, err := db.Exec("INSERT INTO kidtokens VALUES(?,?)", token, kidID)
+	_, err := db.Exec("INSERT INTO kidtokens VALUES(?,?,NULL)", token, kidID)
 
 	return token, err
 }

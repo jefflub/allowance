@@ -22,11 +22,9 @@ func (s SpendMoney) HandleRequest(vars map[string]string) (interface{}, error) {
 		return nil, err
 	}
 
-	// TODO: Validate bucket
-
 	var transactions = []dbapi.Transaction{
-		dbapi.Transaction{0, s.BucketID, loginInfo.ParentID, s.Amount * -1, s.Note, time.Now()},
+		dbapi.Transaction{0, s.BucketID, "", loginInfo.ParentID, "", s.Amount * -1, s.Note, time.Now()},
 	}
 
-	return dbapi.AddTransactions(transactions)
+	return dbapi.AddTransactions(transactions, nil)
 }

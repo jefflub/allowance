@@ -4,10 +4,11 @@ import "github.com/jefflub/allowance/dbapi"
 
 // CreateKid contains request parameters for creating a kid
 type CreateKid struct {
-	Token    string         `json:"token"`
-	KidName  string         `json:"name" validate:"nonzero"`
-	KidEmail string         `json:"email" validate:"regexp=^[0-9a-z]+@[0-9a-z]+(\\.[0-9a-z]+)+$"`
-	Buckets  []dbapi.Bucket `json:"buckets"`
+	Token           string         `json:"token"`
+	KidName         string         `json:"name" validate:"nonzero"`
+	KidEmail        string         `json:"email" validate:"regexp=^[0-9a-z]+@[0-9a-z]+(\\.[0-9a-z]+)+$"`
+	WeeklyAllowance float64        `json:"weeklyAllowance"`
+	Buckets         []dbapi.Bucket `json:"buckets"`
 }
 
 type createKidResponse struct {
@@ -22,7 +23,7 @@ func (c CreateKid) HandleRequest(vars map[string]string) (interface{}, error) {
 		return nil, err
 	}
 
-	kid, err := dbapi.CreateKid(loginInfo.FamilyID, c.KidName, c.KidEmail, c.Buckets)
+	kid, err := dbapi.CreateKid(loginInfo.FamilyID, c.KidName, c.KidEmail, c.WeeklyAllowance, c.Buckets)
 	if err != nil {
 		return nil, err
 	}

@@ -9,7 +9,7 @@ func GetKid(familyID int, kidID int) (Kid, error) {
 		return kid, err
 	}
 
-	buckets, err := GetBuckets(familyID, kidID, false)
+	buckets, err := GetBuckets(kidID)
 	if err != nil {
 		return kid, err
 	}

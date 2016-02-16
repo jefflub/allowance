@@ -9,7 +9,7 @@ func GetKidFromToken(token string) (Kid, error) {
 		return kid, err
 	}
 
-	buckets, err := GetBuckets(0, kid.ID, false)
+	buckets, err := GetBuckets(kid.ID)
 	if err != nil {
 		return kid, err
 	}

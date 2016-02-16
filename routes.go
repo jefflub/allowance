@@ -92,4 +92,16 @@ var routes = Routes{
 		"/createkidtoken",
 		handlers.CreateKidToken{},
 	},
+	Route{
+		"GetLinkTokenInfo",
+		"POST",
+		"/getlinktokeninfo",
+		handlers.GetLinkTokenInfo{},
+	},
+	Route{
+		"DeleteLinkToken",
+		"POST",
+		"/deletelinktoken",
+		handlers.DeleteLinkToken{},
+	},
 }

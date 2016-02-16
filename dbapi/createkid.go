@@ -1,15 +1,18 @@
 package dbapi
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/jinzhu/now"
+)
 
 var defaultBuckets = []Bucket{
-	Bucket{0, "Spending", 80, 0.0},
-	Bucket{0, "Saving", 10, 0.0},
+	Bucket{0, "Spending", 90, 0.0},
 	Bucket{0, "Giving", 10, 0.0},
 }
 
 // CreateKid creates a kid and their buckets in the DB
-func CreateKid(familyID int, name string, email string, buckets []Bucket) (Kid, error) {
+func CreateKid(familyID int, name string, email string, weeklyAllowance float64, buckets []Bucket) (Kid, error) {
 	kid := Kid{0, name, email, buckets}
 	if len(buckets) == 0 {
 		kid.Buckets = defaultBuckets
@@ -32,8 +35,10 @@ func CreateKid(familyID int, name string, email string, buckets []Bucket) (Kid, 
 	}
 	defer tx.Rollback()
 
+	nextAllowance := now.Sunday()
+
 	// Create the family
-	if _, err := tx.Exec("INSERT INTO kids VALUES(NULL, ?, ?, ?, NULL, NULL)", familyID, name, email); err != nil {
+	if _, err := tx.Exec("INSERT INTO kids VALUES(NULL, ?, ?, ?, ?, ?, NULL, NULL)", familyID, name, email, weeklyAllowance, nextAllowance); err != nil {
 		return kid, err
 	}
 	// Get the ID

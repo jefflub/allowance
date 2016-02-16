@@ -50,13 +50,28 @@ type (
 		Total             float64 `json:"total"`
 	}
 
+	// Allocation is a bucket allocation
+	Allocation struct {
+		BucketID   int `json:"bucketId" validate:"nonzero"`
+		Allocation int `json:"allocation" validate:"min=0"`
+	}
+
 	// Transaction is a single save or spend within a bucket
 	Transaction struct {
 		ID         int       `json:"id"`
 		BucketID   int       `json:"bucketId"`
+		BucketName string    `json:"bucketName"`
 		ParentID   int       `json:"parentId"`
+		ParentName string    `json:"parentName"`
 		Amount     float64   `json:"amount"`
 		Note       string    `json:"note"`
 		CreateDate time.Time `json:"createDate"`
+	}
+
+	// LinkTokenInfo is information about a link token
+	LinkTokenInfo struct {
+		LinkToken string `json:"linkToken"`
+		KidID     int    `json:"kidId"`
+		KidName   string `json:"kidName"`
 	}
 )

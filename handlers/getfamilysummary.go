@@ -27,7 +27,7 @@ func (g GetFamilySummary) HandleRequest(vars map[string]string) (interface{}, er
 	}
 
 	for idx := range family.Kids {
-		family.Kids[idx].Buckets, err = dbapi.GetBuckets(loginInfo.FamilyID, family.Kids[idx].ID, false)
+		family.Kids[idx].Buckets, err = dbapi.GetBuckets(family.Kids[idx].ID)
 		if err != nil {
 			return family, err
 		}
