@@ -16,6 +16,9 @@ func OpenDB() error {
 	if err != nil {
 		return err
 	}
+	if err = db.Ping(); err != nil {
+		return err
+	}
 	return nil
 }
 
