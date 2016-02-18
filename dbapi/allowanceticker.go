@@ -31,7 +31,7 @@ func addWeeklyAllowance(kidID int, allowance float64) error {
 }
 
 func init() {
-	ticker := time.NewTicker(time.Minute * 5)
+	ticker := time.NewTicker(time.Minute * 30)
 	go func() {
 		for t := range ticker.C {
 			log.Println("Tick at", t)

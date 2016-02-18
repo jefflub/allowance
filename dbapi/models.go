@@ -2,6 +2,7 @@ package dbapi
 
 import (
 	"database/sql"
+	"log"
 	"time"
 
 	"github.com/jefflub/allowance/config"
@@ -17,7 +18,7 @@ func OpenDB() error {
 		return err
 	}
 	if err = db.Ping(); err != nil {
-		return err
+		log.Println("Startup ping failed: ", err)
 	}
 	return nil
 }
