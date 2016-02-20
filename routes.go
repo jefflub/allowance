@@ -104,4 +104,10 @@ var routes = Routes{
 		"/deletelinktoken",
 		handlers.DeleteLinkToken{},
 	},
+	Route{
+		"GetTransactions",
+		"POST",
+		"/gettransactions",
+		handlers.GetTransactions{},
+	},
 }
