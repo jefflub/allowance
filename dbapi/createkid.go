@@ -13,7 +13,7 @@ var defaultBuckets = []Bucket{
 
 // CreateKid creates a kid and their buckets in the DB
 func CreateKid(familyID int, name string, email string, weeklyAllowance float64, buckets []Bucket) (Kid, error) {
-	kid := Kid{0, name, email, buckets}
+	kid := Kid{0, name, email, weeklyAllowance, buckets}
 	if len(buckets) == 0 {
 		kid.Buckets = defaultBuckets
 	} else {

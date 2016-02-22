@@ -40,10 +40,11 @@ type (
 
 	// Kid is a kid with an allowance
 	Kid struct {
-		ID      int      `json:"id"`
-		Name    string   `json:"name"`
-		Email   string   `json:"email"`
-		Buckets []Bucket `json:"buckets"`
+		ID              int      `json:"id"`
+		Name            string   `json:"name"`
+		Email           string   `json:"email"`
+		WeeklyAllowance float64  `json:"weeklyAllowance"`
+		Buckets         []Bucket `json:"buckets"`
 	}
 
 	// Bucket is a category of allowance savings

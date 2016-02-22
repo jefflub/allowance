@@ -110,4 +110,10 @@ var routes = Routes{
 		"/gettransactions",
 		handlers.GetTransactions{},
 	},
+	Route{
+		"EditKid",
+		"POST",
+		"/editkid",
+		handlers.EditKid{},
+	},
 }
