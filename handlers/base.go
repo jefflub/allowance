@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -66,7 +67,8 @@ func BaseHandler(inner RequestHandler, name string) http.HandlerFunc {
 		pPtr := reflect.New(t)
 		p := pPtr.Interface()
 		if r.Method == "POST" {
-			body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+			var body []byte
+			body, err = ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 			if err == nil {
 				if err = r.Body.Close(); err == nil {
 					if err = json.Unmarshal(body, &p); err == nil {
@@ -90,6 +92,7 @@ func BaseHandler(inner RequestHandler, name string) http.HandlerFunc {
 
 		// Send an error if necessary
 		if err != nil {
+			err = RequestError{fmt.Sprintf("Request Error: %s", err.Error())}
 			w.WriteHeader(422) // unprocessable entity
 			if jerr := json.NewEncoder(w).Encode(err); jerr != nil {
 				panic(jerr)

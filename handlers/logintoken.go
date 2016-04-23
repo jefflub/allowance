@@ -17,7 +17,7 @@ type LoginTokenInfo struct {
 
 // CreateLoginToken creates a token to be used for login
 func CreateLoginToken(familyID int, parentID int) (string, error) {
-	exp := time.Now().Unix() + (3600 * 24)
+	exp := time.Now().Unix() + (3600 * 24 * 7)
 	loginInfo := LoginTokenInfo{exp, familyID, parentID}
 
 	payload, err := json.Marshal(loginInfo)
