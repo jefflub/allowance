@@ -6,7 +6,7 @@ import "github.com/jefflub/allowance/dbapi"
 type CreateKid struct {
 	Token           string         `json:"token"`
 	KidName         string         `json:"name" validate:"nonzero"`
-	KidEmail        string         `json:"email" validate:"regexp=^[0-9a-z]+@[0-9a-z]+(\\.[0-9a-z]+)+$"`
+	KidEmail        string         `json:"email" validate:"regexp=^[\\w+\\-.]+@[a-z\\d\\-.]+\\.[a-z]+$"`
 	WeeklyAllowance float64        `json:"weeklyAllowance"`
 	Buckets         []dbapi.Bucket `json:"buckets"`
 }

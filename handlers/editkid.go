@@ -7,7 +7,7 @@ type EditKid struct {
 	Token           string  `json:"token"`
 	KidID           int     `json:"kidId"`
 	KidName         string  `json:"name" validate:"nonzero"`
-	KidEmail        string  `json:"email" validate:"regexp=^[0-9a-z]+@[0-9a-z]+(\\.[0-9a-z]+)+$"`
+	KidEmail        string  `json:"email" validate:"regexp=^[\\w+\\-.]+@[a-z\\d\\-.]+\\.[a-z]+$"`
 	WeeklyAllowance float64 `json:"weeklyAllowance"`
 }
 

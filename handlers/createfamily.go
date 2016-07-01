@@ -6,7 +6,7 @@ import "github.com/jefflub/allowance/dbapi"
 type CreateFamily struct {
 	FamilyName     string `json:"familyName" validate:"nonzero"`
 	ParentName     string `json:"parentName" validate:"nonzero"`
-	ParentEmail    string `json:"parentEmail" validate:"regexp=^[0-9a-z]+@[0-9a-z]+(\\.[0-9a-z]+)+$"`
+	ParentEmail    string `json:"parentEmail" validate:"regexp=^[\\w+\\-.]+@[a-z\\d\\-.]+\\.[a-z]+$"`
 	ParentPassword string `json:"parentPassword" validate:"min=6"`
 }
 

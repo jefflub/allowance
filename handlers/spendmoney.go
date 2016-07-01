@@ -21,9 +21,8 @@ func (s SpendMoney) HandleRequest(vars map[string]string) (interface{}, error) {
 	if loginInfo, err = ParseLoginToken(s.Token); err != nil {
 		return nil, err
 	}
-
 	var transactions = []dbapi.Transaction{
-		dbapi.Transaction{0, s.BucketID, "", loginInfo.ParentID, "", s.Amount * -1, s.Note, time.Now()},
+		dbapi.Transaction{ID: 0, BucketID: s.BucketID, BucketName: "", ParentID: loginInfo.ParentID, ParentName: "", Amount: s.Amount * -1, Note: s.Note, CreateDate: time.Now()},
 	}
 
 	return dbapi.AddTransactions(transactions, nil)
